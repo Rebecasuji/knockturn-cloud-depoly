@@ -135,7 +135,7 @@ export default function Dashboard() {
                 <Building2 className="w-5 h-5 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="font-display text-lg font-bold text-foreground">Knocxturn</h1>
+                <h1 className="font-display text-lg font-bold text-foreground">Knockturn</h1>
                 <p className="text-xs text-muted-foreground -mt-0.5">Employee Portal</p>
               </div>
             </div>
@@ -275,7 +275,7 @@ export default function Dashboard() {
           className="mt-12 text-center"
         >
           <p className="text-sm text-muted-foreground">
-            © 2026 Knocxturn Technologies • knocxturn.tech
+            © 2026 Knockturn Technologies • knockturn.tech
           </p>
         </motion.div>
       </main>

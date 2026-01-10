@@ -88,7 +88,7 @@ export default function Login() {
             </div>
             
             <h1 className="font-display text-5xl font-bold mb-4 tracking-tight">
-              Knocxturn
+              Knockturn
             </h1>
             <p className="text-xl text-white/80 font-light mb-2">
               Employee Portal
@@ -106,7 +106,7 @@ export default function Login() {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="absolute bottom-12 text-white/50 text-sm"
           >
-            knocxturn.tech
+            knockturn.tech
           </motion.div>
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function Login() {
             <div className="w-16 h-16 mx-auto bg-primary/10 rounded-xl flex items-center justify-center mb-4">
               <Shield className="w-8 h-8 text-primary" />
             </div>
-            <h1 className="font-display text-3xl font-bold text-foreground">Knocxturn</h1>
+            <h1 className="font-display text-3xl font-bold text-foreground">Knockturn</h1>
             <p className="text-muted-foreground mt-1">Employee Portal</p>
           </div>
 
@@ -233,7 +233,7 @@ export default function Login() {
           </Card>
 
           <p className="text-center text-xs text-muted-foreground mt-8">
-            © 2026 Knocxturn Technologies. All rights reserved.
+            © 2026 Knockturn Technologies. All rights reserved.
           </p>
         </motion.div>
       </div>
