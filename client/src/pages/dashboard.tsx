@@ -16,6 +16,8 @@ import {
   ExternalLink,
 } from "lucide-react";
 
+import logoUrl from "@assets/WhatsApp_Image_2026-01-17_at_10.38.06_1768626585689.jpeg";
+
 interface User {
   username: string;
   employeeCode: string;
@@ -27,38 +29,38 @@ const QUICK_LINKS = [
     title: "TimeStrap",
     description: "Track your work hours and manage timesheets",
     icon: Clock,
-    url: "https://timenew--Rebecasuji.replit.app",
+    url: "http://72.61.115.34:5003",
     color: "from-blue-500 to-blue-600",
     bgColor: "bg-blue-50",
     iconColor: "text-blue-600",
     available: true,
   },
   {
-    id: "reports",
-    title: "Reports",
-    description: "View and generate performance reports",
+    id: "lms",
+    title: "Leave Management System (LMS)",
+    description: "Apply and track your leaves effortlessly",
     icon: FileText,
-    url: "#",
+    url: "http://72.61.115.34:5000",
     color: "from-emerald-500 to-emerald-600",
     bgColor: "bg-emerald-50",
     iconColor: "text-emerald-600",
-    available: false,
+    available: true,
   },
   {
-    id: "team",
-    title: "Team",
-    description: "Collaborate with your team members",
+    id: "pms",
+    title: "Project Management System (PMS)",
+    description: "Manage projects and track progress",
     icon: Users,
-    url: "#",
+    url: "http://72.61.115.34:5002",
     color: "from-purple-500 to-purple-600",
     bgColor: "bg-purple-50",
     iconColor: "text-purple-600",
-    available: false,
+    available: true,
   },
   {
-    id: "settings",
-    title: "Settings",
-    description: "Manage your account preferences",
+    id: "boq",
+    title: "BOQ",
+    description: "Bill of Quantities management",
     icon: Settings,
     url: "#",
     color: "from-slate-500 to-slate-600",
@@ -131,12 +133,8 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-md shadow-primary/25">
-                <Building2 className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="font-display text-lg font-bold text-foreground">Knockturn</h1>
-                <p className="text-xs text-muted-foreground -mt-0.5">Employee Portal</p>
+              <div className="h-10 flex items-center justify-center">
+                <img src={logoUrl} alt="Knockturn Logo" className="h-full w-auto object-contain" />
               </div>
             </div>
 

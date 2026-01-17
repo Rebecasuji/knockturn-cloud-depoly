@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Eye, EyeOff, User, KeyRound, Shield, AlertCircle } from "lucide-react";
 
+import logoUrl from "@assets/WhatsApp_Image_2026-01-17_at_10.38.06_1768626585689.jpeg";
+
 const VALID_CREDENTIALS = [
   { username: "MOHAN RAJ C", employeeCode: "E0041" },
   { username: "YUVARAJ S", employeeCode: "E0042" },
@@ -82,8 +84,8 @@ export default function Login() {
             className="text-center"
           >
             <div className="mb-8 animate-float">
-              <div className="w-24 h-24 mx-auto bg-white/15 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/20 shadow-2xl">
-                <Shield className="w-12 h-12 text-white" />
+              <div className="w-full max-w-[300px] mx-auto overflow-hidden rounded-xl flex items-center justify-center border border-white/20 shadow-2xl">
+                <img src={logoUrl} alt="Knockturn Logo" className="w-full h-auto" />
               </div>
             </div>
             
@@ -119,10 +121,9 @@ export default function Login() {
           className="w-full max-w-md"
         >
           <div className="lg:hidden text-center mb-10">
-            <div className="w-16 h-16 mx-auto bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-              <Shield className="w-8 h-8 text-primary" />
+            <div className="w-full max-w-[200px] mx-auto mb-4">
+              <img src={logoUrl} alt="Knockturn Logo" className="w-full h-auto" />
             </div>
-            <h1 className="font-display text-3xl font-bold text-foreground">Knockturn</h1>
             <p className="text-muted-foreground mt-1">Employee Portal</p>
           </div>
 
