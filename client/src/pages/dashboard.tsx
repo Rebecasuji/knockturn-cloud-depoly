@@ -5,15 +5,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
-  Clock,
+  History,
+  CalendarCheck,
+  Layers,
+  Scale,
   LayoutDashboard,
-  FileText,
-  Users,
-  Settings,
   LogOut,
   ChevronRight,
-  Building2,
   ExternalLink,
+  Clock,
+  Bell,
+  Info,
 } from "lucide-react";
 
 import logoUrl from "@assets/WhatsApp_Image_2026-01-17_at_10.38.06_1768626585689.jpeg";
@@ -21,6 +23,7 @@ import logoUrl from "@assets/WhatsApp_Image_2026-01-17_at_10.38.06_1768626585689
 interface User {
   username: string;
   employeeCode: string;
+  email?: string; // Added to support PMS login info
 }
 
 const QUICK_LINKS = [
@@ -28,7 +31,7 @@ const QUICK_LINKS = [
     id: "timestrap",
     title: "TimeStrap",
     description: "Track your work hours and manage timesheets",
-    icon: Clock,
+    icon: History,
     url: "http://72.61.115.34:5003",
     color: "from-blue-500 to-blue-600",
     bgColor: "bg-blue-50",
@@ -39,7 +42,7 @@ const QUICK_LINKS = [
     id: "lms",
     title: "Leave Management System (LMS)",
     description: "Apply and track your leaves effortlessly",
-    icon: FileText,
+    icon: CalendarCheck,
     url: "http://72.61.115.34:5000",
     color: "from-emerald-500 to-emerald-600",
     bgColor: "bg-emerald-50",
@@ -50,7 +53,7 @@ const QUICK_LINKS = [
     id: "pms",
     title: "Project Management System (PMS)",
     description: "Manage projects and track progress",
-    icon: Users,
+    icon: Layers,
     url: "http://72.61.115.34:5002",
     color: "from-purple-500 to-purple-600",
     bgColor: "bg-purple-50",
@@ -61,12 +64,12 @@ const QUICK_LINKS = [
     id: "boq",
     title: "BOQ",
     description: "Bill of Quantities management",
-    icon: Settings,
-    url: "#",
+    icon: Scale,
+    url: "http://72.61.115.34:5005",
     color: "from-slate-500 to-slate-600",
     bgColor: "bg-slate-100",
     iconColor: "text-slate-600",
-    available: false,
+    available: true,
   },
 ];
 
@@ -163,6 +166,7 @@ export default function Dashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -200,10 +204,55 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
+        {/* Login Notifications Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
+          className="mb-8 space-y-4"
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <Bell className="w-5 h-5 text-primary" />
+            <h3 className="font-display text-lg font-semibold text-foreground">System Notifications</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* TimeStrap Notification */}
+            <div className="flex items-start gap-3 p-4 bg-blue-50 border border-blue-100 rounded-lg">
+              <Info className="w-5 h-5 text-blue-600 mt-0.5" />
+              <div>
+                <p className="text-sm font-bold text-blue-900">TimeStrap Login</p>
+                <p className="text-xs text-blue-800">Employee code: <span className="font-mono font-semibold">{user.employeeCode}</span></p>
+                <p className="text-xs text-blue-800">Password: <span className="font-mono font-semibold">admin1234</span></p>
+              </div>
+            </div>
+
+            {/* PMS Notification */}
+            <div className="flex items-start gap-3 p-4 bg-purple-50 border border-purple-100 rounded-lg">
+              <Info className="w-5 h-5 text-purple-600 mt-0.5" />
+              <div>
+                <p className="text-sm font-bold text-purple-900">Project Management System Login</p>
+                <p className="text-xs text-purple-800">Email: <span className="font-mono font-semibold">{user.email || "Your Registered Email"}</span></p>
+                <p className="text-xs text-purple-800">Password: <span className="font-mono font-semibold">mail password</span></p>
+              </div>
+            </div>
+
+            {/* LMS Notification */}
+            <div className="flex items-start gap-3 p-4 bg-emerald-50 border border-emerald-100 rounded-lg">
+              <Info className="w-5 h-5 text-emerald-600 mt-0.5" />
+              <div>
+                <p className="text-sm font-bold text-emerald-900">Leave Management System Login</p>
+                <p className="text-xs text-emerald-800">Employee code: <span className="font-mono font-semibold">{user.employeeCode}</span></p>
+                <p className="text-xs text-emerald-800">Password: <span className="font-mono font-semibold">{user.employeeCode}123</span></p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="mb-6"
         >
           <div className="flex items-center gap-2 mb-4">
@@ -218,7 +267,7 @@ export default function Dashboard() {
               key={link.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 + index * 0.1 }}
+              transition={{ duration: 0.5, delay: 0.25 + index * 0.1 }}
             >
               <Card
                 className={`group relative overflow-hidden border transition-all duration-300 ${
@@ -237,7 +286,7 @@ export default function Dashboard() {
                   </div>
                 )}
                 <CardHeader className="pb-3">
-                  <div className={`w-12 h-12 rounded-xl ${link.bgColor} flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110`}>
+                  <div className={`w-12 h-12 rounded-xl ${link.bgColor} flex items-center justify-center mb-3 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110`}>
                     <link.icon className={`w-6 h-6 ${link.iconColor}`} />
                   </div>
                   <CardTitle className="text-base font-semibold text-foreground flex items-center gap-2">
@@ -269,7 +318,7 @@ export default function Dashboard() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          transition={{ duration: 0.5, delay: 0.7 }}
           className="mt-12 text-center"
         >
           <p className="text-sm text-muted-foreground">
