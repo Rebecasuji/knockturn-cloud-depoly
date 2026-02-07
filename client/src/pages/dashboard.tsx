@@ -56,7 +56,7 @@ const QUICK_LINKS = [
     title: "Project Management System (PMS)",
     description: "Manage projects and track progress",
     icon: Layers,
-    url: `http://${BASE_IP}:5003`,
+    url: `http://${BASE_IP}:5002`,
     color: "from-purple-500 to-purple-600",
     bgColor: "bg-purple-50",
     iconColor: "text-purple-600",
