@@ -20,14 +20,14 @@ const VALID_CREDENTIALS = [
   { username: "Samyuktha S", employeeCode: "E0047" },
   { username: "Rebecasuji.A", employeeCode: "E0046" },
   { username: "DurgaDevi E", employeeCode: "E0048" },
-  { username: "ZAMEELA BEGAM N.", employeeCode: "E0050" },
-  { username: "ARUN KUMAR V.", employeeCode: "E0051" },
+  { username: "ZAMEELA BEGAM N", employeeCode: "E0050" },
+  { username: "ARUN KUMAR V", employeeCode: "E0051" },
   { username: "D K JYOTHSNA PRIYA", employeeCode: "E0052" },
   { username: "P PUSHPA", employeeCode: "E0049" },
   { username: "KIRUBA", employeeCode: "E0054" },
   { username: "S.NAVEEN KUMAR", employeeCode: "E0053" },
   { username: "Leocelestine", employeeCode: "E0002" },
-  { username: "Samparkash", employeeCode: "E0001" },
+  { username: "Samprakash", employeeCode: "E0001" },
 ];
 
 const PASSWORD = "admin123";

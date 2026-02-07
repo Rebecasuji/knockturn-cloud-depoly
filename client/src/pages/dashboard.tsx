@@ -23,8 +23,10 @@ import logoUrl from "@assets/WhatsApp_Image_2026-01-17_at_10.38.06_1768626585689
 interface User {
   username: string;
   employeeCode: string;
-  email?: string; // Added to support PMS login info
+  email?: string;
 }
+
+const BASE_IP = "147.93.28.144";
 
 const QUICK_LINKS = [
   {
@@ -32,7 +34,7 @@ const QUICK_LINKS = [
     title: "TimeStrap",
     description: "Track your work hours and manage timesheets",
     icon: History,
-    url: "http://72.61.115.34:5003",
+    url: `http://${BASE_IP}:5003`,
     color: "from-blue-500 to-blue-600",
     bgColor: "bg-blue-50",
     iconColor: "text-blue-600",
@@ -43,7 +45,7 @@ const QUICK_LINKS = [
     title: "Leave Management System (LMS)",
     description: "Apply and track your leaves effortlessly",
     icon: CalendarCheck,
-    url: "http://72.61.115.34:5000",
+    url: `http://${BASE_IP}:5001/`,
     color: "from-emerald-500 to-emerald-600",
     bgColor: "bg-emerald-50",
     iconColor: "text-emerald-600",
@@ -54,7 +56,7 @@ const QUICK_LINKS = [
     title: "Project Management System (PMS)",
     description: "Manage projects and track progress",
     icon: Layers,
-    url: "http://72.61.115.34:5002",
+    url: `http://${BASE_IP}:5003`,
     color: "from-purple-500 to-purple-600",
     bgColor: "bg-purple-50",
     iconColor: "text-purple-600",
@@ -65,13 +67,15 @@ const QUICK_LINKS = [
     title: "BOQ",
     description: "Bill of Quantities management",
     icon: Scale,
-    url: "http://72.61.115.34:5005",
+    url: `http://${BASE_IP}`,
     color: "from-slate-500 to-slate-600",
     bgColor: "bg-slate-100",
     iconColor: "text-slate-600",
     available: true,
   },
-];
+] as const;
+
+const DEFAULT_PASSWORD = "admin123";
 
 export default function Dashboard() {
   const [, setLocation] = useLocation();
@@ -95,7 +99,7 @@ export default function Dashboard() {
     setLocation("/");
   };
 
-  const handleLinkClick = (link: typeof QUICK_LINKS[0]) => {
+  const handleLinkClick = (link: (typeof QUICK_LINKS)[number]) => {
     if (link.available && link.url !== "#") {
       window.open(link.url, "_blank", "noopener,noreferrer");
     }
@@ -137,14 +141,22 @@ export default function Dashboard() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
               <div className="h-10 flex items-center justify-center">
-                <img src={logoUrl} alt="Knockturn Logo" className="h-full w-auto object-contain" />
+                <img
+                  src={logoUrl}
+                  alt="Knockturn Logo"
+                  className="h-full w-auto object-contain"
+                />
               </div>
             </div>
 
             <div className="flex items-center gap-4">
               <div className="hidden sm:block text-right">
-                <p className="text-sm font-medium text-foreground">{user.username}</p>
-                <p className="text-xs text-muted-foreground">{user.employeeCode}</p>
+                <p className="text-sm font-medium text-foreground">
+                  {user.username}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {user.employeeCode}
+                </p>
               </div>
               <Avatar className="w-10 h-10 border-2 border-primary/20">
                 <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm">
@@ -175,8 +187,8 @@ export default function Dashboard() {
         >
           <Card className="bg-gradient-to-br from-primary via-primary to-[hsl(215,85%,35%)] text-primary-foreground border-0 shadow-xl shadow-primary/20 overflow-hidden relative">
             <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full blur-2xl -translate-x-1/2 translate-y-1/2"></div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full blur-2xl -translate-x-1/2 translate-y-1/2" />
             </div>
             <CardContent className="relative p-6 sm:p-8">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
@@ -204,7 +216,7 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
-        {/* Login Notifications Section */}
+        {/* System Notifications (NO BOQ notification, LMS uses admin123 and can change via Forgot Password) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -213,37 +225,79 @@ export default function Dashboard() {
         >
           <div className="flex items-center gap-2 mb-2">
             <Bell className="w-5 h-5 text-primary" />
-            <h3 className="font-display text-lg font-semibold text-foreground">System Notifications</h3>
+            <h3 className="font-display text-lg font-semibold text-foreground">
+              System Notifications
+            </h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* TimeStrap Notification */}
+            {/* TimeStrap */}
             <div className="flex items-start gap-3 p-4 bg-blue-50 border border-blue-100 rounded-lg">
               <Info className="w-5 h-5 text-blue-600 mt-0.5" />
               <div>
-                <p className="text-sm font-bold text-blue-900">TimeStrap Login</p>
-                <p className="text-xs text-blue-800">Employee code: <span className="font-mono font-semibold">{user.employeeCode}</span></p>
-                <p className="text-xs text-blue-800">Password: <span className="font-mono font-semibold">admin1234</span></p>
+                <p className="text-sm font-bold text-blue-900">
+                  TimeStrap Login
+                </p>
+                <p className="text-xs text-blue-800">
+                  Employee code:{" "}
+                  <span className="font-mono font-semibold">
+                    {user.employeeCode}
+                  </span>
+                </p>
+                <p className="text-xs text-blue-800">
+                  Password:{" "}
+                  <span className="font-mono font-semibold">
+                    {DEFAULT_PASSWORD}
+                  </span>
+                </p>
               </div>
             </div>
 
-            {/* PMS Notification */}
-            <div className="flex items-start gap-3 p-4 bg-purple-50 border border-purple-100 rounded-lg">
-              <Info className="w-5 h-5 text-purple-600 mt-0.5" />
-              <div>
-                <p className="text-sm font-bold text-purple-900">Project Management System Login</p>
-                <p className="text-xs text-purple-800">Email: <span className="font-mono font-semibold">{user.email || "Your Registered Email"}</span></p>
-                <p className="text-xs text-purple-800">Password: <span className="font-mono font-semibold">mail password</span></p>
-              </div>
-            </div>
-
-            {/* LMS Notification */}
+            {/* LMS */}
             <div className="flex items-start gap-3 p-4 bg-emerald-50 border border-emerald-100 rounded-lg">
               <Info className="w-5 h-5 text-emerald-600 mt-0.5" />
               <div>
-                <p className="text-sm font-bold text-emerald-900">Leave Management System Login</p>
-                <p className="text-xs text-emerald-800">Employee code: <span className="font-mono font-semibold">{user.employeeCode}</span></p>
-                <p className="text-xs text-emerald-800">Password: <span className="font-mono font-semibold">{user.employeeCode}123</span></p>
+                <p className="text-sm font-bold text-emerald-900">
+                  LMS Login
+                </p>
+                <p className="text-xs text-emerald-800">
+                  Employee code:{" "}
+                  <span className="font-mono font-semibold">
+                    {user.employeeCode}
+                  </span>
+                </p>
+                <p className="text-xs text-emerald-800">
+                  Default password:{" "}
+                  <span className="font-mono font-semibold">
+                    {DEFAULT_PASSWORD}
+                  </span>
+                </p>
+                <p className="text-xs text-emerald-800">
+                  You can change it using{" "}
+                  <span className="font-semibold">“Forgot Password”</span>.
+                </p>
+              </div>
+            </div>
+
+            {/* PMS */}
+            <div className="flex items-start gap-3 p-4 bg-purple-50 border border-purple-100 rounded-lg">
+              <Info className="w-5 h-5 text-purple-600 mt-0.5" />
+              <div>
+                <p className="text-sm font-bold text-purple-900">
+                  PMS Login
+                </p>
+                <p className="text-xs text-purple-800">
+                  Employee code:{" "}
+                  <span className="font-mono font-semibold">
+                    {user.employeeCode}
+                  </span>
+                </p>
+                <p className="text-xs text-purple-800">
+                  Password:{" "}
+                  <span className="font-mono font-semibold">
+                    {DEFAULT_PASSWORD}
+                  </span>
+                </p>
               </div>
             </div>
           </div>
@@ -257,7 +311,9 @@ export default function Dashboard() {
         >
           <div className="flex items-center gap-2 mb-4">
             <LayoutDashboard className="w-5 h-5 text-primary" />
-            <h3 className="font-display text-lg font-semibold text-foreground">Quick Access</h3>
+            <h3 className="font-display text-lg font-semibold text-foreground">
+              Quick Access
+            </h3>
           </div>
         </motion.div>
 
@@ -286,7 +342,9 @@ export default function Dashboard() {
                   </div>
                 )}
                 <CardHeader className="pb-3">
-                  <div className={`w-12 h-12 rounded-xl ${link.bgColor} flex items-center justify-center mb-3 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110`}>
+                  <div
+                    className={`w-12 h-12 rounded-xl ${link.bgColor} flex items-center justify-center mb-3 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110`}
+                  >
                     <link.icon className={`w-6 h-6 ${link.iconColor}`} />
                   </div>
                   <CardTitle className="text-base font-semibold text-foreground flex items-center gap-2">
@@ -308,7 +366,9 @@ export default function Dashboard() {
                   )}
                 </CardContent>
                 {link.available && (
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${link.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`}></div>
+                  <div
+                    className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${link.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`}
+                  />
                 )}
               </Card>
             </motion.div>
