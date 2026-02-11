@@ -9,10 +9,26 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
 });
 
+export const employees = pgTable("employees", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  username: text("username").notNull().unique(),
+  employeeCode: text("employee_code").notNull().unique(),
+  password: text("password").notNull(),
+  createdAt: varchar("created_at").default(sql`now()`),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
 });
 
+export const insertEmployeeSchema = createInsertSchema(employees).pick({
+  username: true,
+  employeeCode: true,
+  password: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+export type InsertEmployee = z.infer<typeof insertEmployeeSchema>;
+export type Employee = typeof employees.$inferSelect;

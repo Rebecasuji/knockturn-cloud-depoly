@@ -5,32 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Eye, EyeOff, User, KeyRound, Shield, AlertCircle } from "lucide-react";
+import { Eye, EyeOff, User, KeyRound, AlertCircle } from "lucide-react";
 
 import logoUrl from "@assets/WhatsApp_Image_2026-01-17_at_10.38.06_1768626585689.jpeg";
-
-const VALID_CREDENTIALS = [
-  { username: "MOHAN RAJ C", employeeCode: "E0041" },
-  { username: "YUVARAJ S", employeeCode: "E0042" },
-  { username: "SIVARAM C", employeeCode: "E0032" },
-  { username: "UMAR FAROOQUE", employeeCode: "E0040" },
-  { username: "KAALIPUSHPA ", employeeCode: "E0028" },
-  { username: "RANJITH", employeeCode: "E0009" },
-  { username: "FAREETHA", employeeCode: "-" },
-  { username: "Samyuktha S", employeeCode: "E0047" },
-  { username: "Rebecasuji.A", employeeCode: "E0046" },
-  { username: "DurgaDevi E", employeeCode: "E0048" },
-  { username: "ZAMEELA BEGAM N", employeeCode: "E0050" },
-  { username: "ARUN KUMAR V", employeeCode: "E0051" },
-  { username: "D K JYOTHSNA PRIYA", employeeCode: "E0052" },
-  { username: "P PUSHPA", employeeCode: "E0049" },
-  { username: "KIRUBA", employeeCode: "E0054" },
-  { username: "S.NAVEEN KUMAR", employeeCode: "E0053" },
-  { username: "Leocelestine", employeeCode: "E0002" },
-  { username: "Samprakash", employeeCode: "E0001" },
-];
-
-const PASSWORD = "admin123";
 
 export default function Login() {
   const [, setLocation] = useLocation();
@@ -46,22 +23,44 @@ export default function Login() {
     setError("");
     setIsLoading(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          employeeCode,
+          password,
+        }),
+      });
 
-    const isValidUser = VALID_CREDENTIALS.some(
-      (cred) =>
-        cred.username.toLowerCase() === username.toLowerCase() &&
-        cred.employeeCode.toLowerCase() === employeeCode.toLowerCase()
-    );
+      const data = await response.json();
 
-    if (isValidUser && password === PASSWORD) {
-      localStorage.setItem("knocxtirn_user", JSON.stringify({ username, employeeCode }));
+      if (!response.ok) {
+        setError(data.error || "Login failed. Please try again.");
+        return;
+      }
+
+      // Store user data
+      localStorage.setItem(
+        "knocxtirn_user",
+        JSON.stringify({
+          id: data.user.id,
+          username: data.user.username,
+          employeeCode: data.user.employeeCode,
+        })
+      );
+
+      // Redirect to dashboard
       setLocation("/dashboard");
-    } else {
-      setError("Invalid credentials. Please check your username, employee code, and password.");
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
