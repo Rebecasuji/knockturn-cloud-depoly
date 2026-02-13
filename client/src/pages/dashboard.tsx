@@ -67,7 +67,7 @@ const QUICK_LINKS = [
     title: "BOQ",
     description: "Bill of Quantities management",
     icon: Scale,
-    url: `http://${BASE_IP}:5006`,
+    url: `http://${BASE_IP}:5005`,
     color: "from-slate-500 to-slate-600",
     bgColor: "bg-slate-100",
     iconColor: "text-slate-600",
